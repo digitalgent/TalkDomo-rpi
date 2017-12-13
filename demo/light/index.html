@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TalkDomo Light Demo</title>
+    <style media="screen">
+      @import url(https://fonts.googleapis.com/css?family=Roboto);
+
+      html { height: 100%; }
+      body {
+        min-height: 98%;
+        font: 16px/1em Roboto, sans-serif;
+        background-color: #4a4a4a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-box-align: center;
+      }
+      h1 {
+        font-weight: 900;
+        font-size: 10em;
+        text-transform: uppercase;
+        color: rgba(0,0,0, .25);
+        max-width: 80%;
+      }
+
+      .on { display: none; }
+
+      .active {
+        background-color: white;
+      }
+
+      .active .on {
+        color: rgba(148,0,211, 100);
+        display: block;
+      }
+
+      .active .off { display: none; }
+    </style>
+  </head>
+  <body id="demo-light" class="active-not">
+
+    <h1 class="off">Lights Off</h1>
+    <h1 class="on">Lights On</h1>
+
+  </body>
+  <script src="../main.js"></script>
+  <script type="text/javascript">
+    var statelog = "off";
+
+    var iv = setInterval(function(){ getJSON('/apps/1', function(err, data)
+    {
+      if(data.status != statelog)
+      {
+        statelog = data.status;
+
+        if(statelog == "on") document.body.className = "active";
+        else if(statelog == "off") document.body.className = "";
+      }
+
+      console.log('intervalled', data.status)
+
+    });}, 2000);
+  </script>
+</html>
